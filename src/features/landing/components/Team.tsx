@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { HyperText } from '../../../shared/components/ui/hyper-text';
@@ -9,7 +9,8 @@ const CAROUSEL_TRANSITION_MOBILE = { duration: 0.5, ease: CAROUSEL_EASE };
 
 const MOBILE_BREAKPOINT = 768;
 
-const officers = [
+/** Raw officer list; sorted so president is always first for carousel order */
+const officersRaw = [
   { id: 1, name: "Julliana Louise I. Onor", role: "President", year: "2nd Year", major: "BSCS", isPresident: true, social: { email: "jlOnor@mcm.edu.ph" } },
   { id: 2, name: "Drew Dwayne B. Sultan", role: "Internal Vice President", year: "2nd Year", major: "BSCS", social: { email: "ddSultan@mcm.edu.ph" } },
   { id: 3, name: "Kisha Ann Joy M. Sanchez", role: "External Vice President", year: "2nd Year", major: "BSCS", social: { email: "kajsanchez@mcm.edu.ph" } },
@@ -27,7 +28,10 @@ const officers = [
   { id: 15, name: "Jose P. Anuada Jr.", role: "Academic Affairs Head", year: "2nd Year", major: "BSCS", social: { email: "jpanuada@mcm.edu.ph" } }
 ];
 
-/** Auto-advance carousel to next officer every 5s when not paused (e.g. hover) */
+/** President always first; carousel and initial index use this ordered list */
+const officers = [...officersRaw].sort((a, b) => Number(!!(b as { isPresident?: boolean }).isPresident) - Number(!!(a as { isPresident?: boolean }).isPresident));
+
+/** Auto-advance carousel to next officer every 5s when not paused and section is in viewport */
 const AUTO_ROTATE_INTERVAL_MS = 5000;
 
 const SEMI_CIRCLE_SLOTS = [-2, -1, 0, 1, 2] as const;
@@ -116,6 +120,9 @@ const PRESIDENT_INITIAL_INDEX = Math.max(
 const Team: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(PRESIDENT_INITIAL_INDEX);
   const [isPaused, setIsPaused] = useState(false);
+  /** True when the team section is visible in the viewport; auto-advance runs only then */
+  const [isInViewport, setIsInViewport] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const isMobile = useIsMobile();
 
   const nextOfficer = useCallback(() => {
@@ -126,11 +133,26 @@ const Team: React.FC = () => {
     setActiveIndex((prev) => (prev - 1 + officers.length) % officers.length);
   }, []);
 
+  /** Observe team section visibility; auto-advance only when section is in viewport */
   useEffect(() => {
-    if (isPaused) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => setIsInViewport(entry.isIntersecting));
+      },
+      { threshold: 0.2, rootMargin: '0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  /** Auto-rotate only when not paused and team section is in viewport */
+  useEffect(() => {
+    if (isPaused || !isInViewport) return;
     const interval = setInterval(nextOfficer, AUTO_ROTATE_INTERVAL_MS);
     return () => clearInterval(interval);
-  }, [isPaused, nextOfficer]);
+  }, [isPaused, isInViewport, nextOfficer]);
 
   const handleUserInteraction = () => {
     setIsPaused(true);
@@ -143,7 +165,7 @@ const Team: React.FC = () => {
   };
 
   return (
-    <section id="team" className="relative overflow-visible bg-[#1a1d2e] pt-24 md:pt-48 pb-0">
+    <section ref={sectionRef} id="team" className="relative overflow-visible bg-[#1a1d2e] pt-24 md:pt-48 pb-0">
       <style>{`
         #team .card-standard {
           background: #1a1d2e !important;
