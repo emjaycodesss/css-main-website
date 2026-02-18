@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers: static assets only (no Worker script).
+  // CI must run: npm run deploy   OR   npx wrangler deploy --config wrangler.jsonc
+  "name": "main-website",
+  "compatibility_date": "2026-02-18",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
+
