@@ -7,6 +7,8 @@
  */
 export const ROUTE_PATHS = {
   HOME: '/',
+  /** QR gate: verify code then collect name, section, program */
+  GATE: '/gate',
 } as const;
 
 /**

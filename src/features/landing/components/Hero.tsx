@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ShaderGradientCanvas, ShaderGradient } from 'shadergradient';
-import Navbar from '../../../shared/components/layout/Navbar';
 import Marquee from './Marquee';
 
 /** Top subtitle words – slide up by word */
@@ -186,7 +185,6 @@ const Hero: React.FC = () => {
         </div>
         </div>
       </div>
-      <Navbar />
       <Marquee />
     </section>
   );
