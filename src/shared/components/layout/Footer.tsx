@@ -56,18 +56,12 @@ const DeveloperModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ is
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#1a1d2e]/80 backdrop-blur-[8px]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#1a1d2e]/80 p-3 backdrop-blur-[8px] sm:p-4"
+      style={{ paddingLeft: 'max(12px, env(safe-area-inset-left))', paddingRight: 'max(12px, env(safe-area-inset-right))' }}
       onClick={onClose}
     >
       <div
-        className="
-          bg-[#1a1d2e]
-          border border-[rgba(139,126,230,0.12)]
-          rounded-2xl
-          shadow-[0_8px_24px_rgba(0,0,0,0.18)]
-          max-w-4xl w-full max-h-[85vh] overflow-y-auto
-          relative
-        "
+        className="relative w-full max-w-4xl max-h-[85vh] min-h-0 overflow-y-auto overflow-x-hidden rounded-xl border border-[rgba(139,126,230,0.12)] bg-[#1a1d2e] shadow-[0_8px_24px_rgba(0,0,0,0.18)] sm:rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <style>{`
@@ -80,27 +74,27 @@ const DeveloperModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ is
           .dev-modal-social:hover { color: #9388C4 !important; }
         `}</style>
 
-        <div className="flex items-center justify-between gap-4 p-6 pb-4 sticky top-0 z-10 bg-[#1a1d2e] border-b border-transparent">
-          <div className="cursor-default">
-            <h2 className="font-['Nasalization',sans-serif] font-normal uppercase leading-[0.95] tracking-[-0.02em] text-[clamp(1.75rem,4vw,3rem)] text-white mb-2 cursor-default">
+        <div className="flex items-center justify-between gap-3 p-4 pb-3 sticky top-0 z-10 min-w-0 border-b border-transparent bg-[#1a1d2e] sm:gap-4 sm:p-6 sm:pb-4">
+          <div className="min-w-0 cursor-default">
+            <h2 className="font-['Nasalization',sans-serif] mb-2 cursor-default font-normal uppercase leading-[0.95] tracking-[-0.02em] text-white text-[clamp(1.25rem,4vw,3rem)] sm:text-[clamp(1.75rem,4vw,3rem)]">
               Development Team
             </h2>
-            <p className="font-[var(--font-sans)] text-lg md:text-xl leading-relaxed text-[#b8b4c9] cursor-default">Meet the developers behind this project</p>
+            <p className="font-[var(--font-sans)] cursor-default text-sm leading-relaxed text-[#b8b4c9] sm:text-base md:text-lg lg:text-xl">Meet the developers behind this project</p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="shrink-0 p-2 rounded-xl text-[#8b7ee6] cursor-pointer transition-colors duration-200 hover:text-[#b5a8d4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(139,126,230,0.4)]"
+            className="shrink-0 touch-manipulation rounded-xl p-2 text-[#8b7ee6] cursor-pointer transition-colors duration-200 hover:text-[#b5a8d4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(139,126,230,0.4)]"
             aria-label="Close modal"
           >
-            <X className="w-5 h-5" strokeWidth={2} />
+            <X className="h-5 w-5" strokeWidth={2} />
           </button>
         </div>
 
-        <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[rgba(139,126,230,0.3)] to-transparent mx-0" />
+        <div className="mx-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[rgba(139,126,230,0.3)] to-transparent" />
 
-        <div className="p-6 pt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="p-4 pt-4 sm:p-6 sm:pt-6">
+          <div className="grid grid-cols-1 gap-3 min-w-0 md:grid-cols-2 md:gap-4">
             {developers.map((developer) => (
               <div
                 key={developer.id}
@@ -175,10 +169,11 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
   const navigate = useNavigate();
 
   // Minimal footer for auth pages (hooks must be called before any early return)
+  // Uses design-system container so padding/margins never exceed page layout
   if (minimal) {
     return (
-      <footer className="border-t border-[rgba(168,156,200,0.08)] rounded-b-2xl">
-        <div className="w-full max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 2xl:px-12 py-4">
+      <footer className="w-full overflow-x-hidden border-t border-[rgba(168,156,200,0.08)] rounded-b-2xl">
+        <div className="container-responsive w-full py-4">
           <p className="font-[var(--font-sans)] font-normal text-xs text-[rgba(184,180,201,0.5)] text-center cursor-default">
             © {new Date().getFullYear()} Computing Students' Society. All rights reserved.
           </p>
@@ -231,8 +226,9 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
           color: #9388C4 !important;
         }
       `}</style>
+      {/* Mobile-first, responsive footer: respects design-system container padding so content never exceeds page margins */}
       <footer
-        className="relative pt-16 pb-12 overflow-hidden min-h-[420px] bg-[#1a1d2e]"
+        className="relative w-full min-w-0 overflow-x-hidden overflow-y-visible bg-[#1a1d2e] pt-6 pb-6 min-h-0 sm:pt-8 sm:pb-8 md:pt-10 md:pb-10 lg:pt-16 lg:pb-12 lg:min-h-[420px]"
       >
         <div
           className="pointer-events-none absolute inset-0 z-0"
@@ -247,74 +243,83 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
             mixBlendMode: 'multiply',
           }}
         />
-        <div className="w-full max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 2xl:px-12 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 gap-y-8 lg:gap-y-0">
-            <div className="lg:col-span-4 flex flex-col items-start border border-[rgba(168,156,200,0.2)] rounded-2xl p-6">
-              <div className="flex flex-col items-start gap-6 text-left">
-                <img src="/assets/icons/logo.svg" alt="CSS Logo" className="h-16 md:h-20 w-auto cursor-default" />
-                <p className="font-[var(--font-sans)] text-body-apple text-[rgba(184,180,201,0.9)] leading-relaxed text-left cursor-default">
-                  A diverse collective connecting minds in tech, fostering community, and shaping the future of computing at the university.
+        {/* Design-system container: same max-width and horizontal padding as rest of site — no overflow past page margins */}
+        <div className="container-responsive relative z-10 w-full min-w-0">
+          {/* Mobile: single column; lg: 12-col grid. min-w-0 on grid prevents flex/grid blowout. */}
+          <div className="grid grid-cols-1 gap-3 gap-y-5 min-w-0 sm:gap-4 sm:gap-y-6 md:gap-5 lg:grid-cols-12 lg:gap-6 lg:gap-y-0">
+            {/* Logo + tagline block: full width on mobile, lg = 4 cols. min-w-0 allows text to shrink/wrap. */}
+            <div className="flex min-w-0 flex-col items-start border border-[rgba(168,156,200,0.2)] rounded-xl p-3 sm:rounded-2xl sm:p-4 md:p-5 lg:col-span-4 lg:p-6">
+              <div className="flex min-w-0 flex-col items-start gap-3 sm:gap-4 md:gap-5 lg:gap-6 text-left">
+                <img src="/assets/icons/logo.svg" alt="CSS Logo" className="h-12 w-auto shrink-0 sm:h-14 md:h-16 lg:h-20 cursor-default" />
+                <p className="font-[var(--font-sans)] min-w-0 text-[length:var(--text-subhead)] sm:text-sm md:text-base text-[rgba(184,180,201,0.9)] leading-relaxed text-left cursor-default">
+                  A Diverse Collective Shaping the Global Technological Landscape of Tomorrow
                 </p>
               </div>
             </div>
 
-            <div className="lg:col-span-8 flex flex-col gap-3">
-              <div className="border border-[rgba(168,156,200,0.2)] rounded-2xl p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <h3 className="font-['Nasalization',sans-serif] font-semibold text-white uppercase tracking-wide shrink-0 cursor-default">
+            {/* Right column: pages, copyright/socials, made-with. Full width on mobile. */}
+            <div className="flex min-w-0 flex-col gap-3 sm:gap-4 lg:col-span-8">
+              {/* PAGES: stacked on mobile, row on sm+; nav can wrap without overflowing */}
+              <div className="flex min-w-0 flex-col gap-3 rounded-xl border border-[rgba(168,156,200,0.2)] p-3 sm:flex-row sm:items-center sm:justify-between sm:rounded-2xl sm:gap-4 sm:p-4 md:p-5 lg:p-6">
+                <h3 className="font-['Nasalization',sans-serif] shrink-0 cursor-default text-xs font-semibold uppercase tracking-wide text-white sm:text-sm md:text-base">
                   PAGES
                 </h3>
-                <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer pages">
-                  <button type="button" onClick={() => scrollToSection('home')} className="footer-pages-link text-left uppercase cursor-pointer">Home</button>
-                  <button type="button" onClick={() => scrollToSection('what-is-css')} className="footer-pages-link text-left uppercase cursor-pointer">About</button>
-                  <button type="button" onClick={() => scrollToSection('team')} className="footer-pages-link text-left uppercase cursor-pointer">Team</button>
-                  <button type="button" onClick={() => scrollToSection('gallery')} className="footer-pages-link text-left uppercase cursor-pointer">Gallery</button>
+                <nav className="flex min-w-0 flex-wrap gap-x-3 gap-y-1 sm:gap-x-6 sm:gap-y-2" aria-label="Footer pages">
+                  <button type="button" onClick={() => scrollToSection('home')} className="footer-pages-link flex min-h-[44px] min-w-0 items-center text-left text-xs uppercase cursor-pointer sm:min-h-0 sm:text-sm md:text-base">Home</button>
+                  <button type="button" onClick={() => scrollToSection('what-is-css')} className="footer-pages-link flex min-h-[44px] min-w-0 items-center text-left text-xs uppercase cursor-pointer sm:min-h-0 sm:text-sm md:text-base">About</button>
+                  <button type="button" onClick={() => scrollToSection('team')} className="footer-pages-link flex min-h-[44px] min-w-0 items-center text-left text-xs uppercase cursor-pointer sm:min-h-0 sm:text-sm md:text-base">Team</button>
+                  <button type="button" onClick={() => scrollToSection('gallery')} className="footer-pages-link flex min-h-[44px] min-w-0 items-center text-left text-xs uppercase cursor-pointer sm:min-h-0 sm:text-sm md:text-base">Gallery</button>
                 </nav>
               </div>
 
-              <div className="grid grid-cols-[1fr_auto_auto_auto] sm:grid-cols-[7fr_1fr_1fr_1fr] gap-3">
-                <div className="border border-[rgba(168,156,200,0.2)] rounded-2xl p-6 flex flex-wrap items-center justify-between min-h-[4rem]">
-                  <span className="font-['Nasalization',sans-serif] text-white cursor-default">{new Date().getFullYear()}</span>
-                  <span className="text-body-apple text-[rgba(184,180,201,0.8)] cursor-default">
+              {/* Copyright + socials: mobile = copyright full-width then 3 icons in one row; sm+ = single row */}
+              <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-[7fr_1fr_1fr_1fr]">
+                <div className="flex min-h-[3rem] min-w-0 flex-wrap items-center justify-center gap-2 rounded-xl border border-[rgba(168,156,200,0.2)] p-3 sm:min-h-[3.5rem] sm:justify-between sm:rounded-2xl sm:p-4 md:min-h-[4rem] md:p-5 lg:p-6">
+                  <span className="font-['Nasalization',sans-serif] shrink-0 cursor-default text-xs text-white sm:text-sm md:text-base">{new Date().getFullYear()}</span>
+                  <span className="min-w-0 cursor-default text-center text-xs text-[rgba(184,180,201,0.8)] sm:text-left sm:text-sm md:text-base">
                     Copyright © CSS
                   </span>
                 </div>
-                <a
-                  href="https://github.com/css-mmcm"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-icon-link border border-[rgba(168,156,200,0.2)] rounded-2xl p-6 flex items-center justify-center min-h-[4rem] transition-all cursor-pointer"
-                  title="GitHub"
-                >
-                  <Github className="w-6 h-6" strokeWidth={2} />
-                </a>
-                <a
-                  href="https://www.facebook.com/CSS.MMCM"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-icon-link border border-[rgba(168,156,200,0.2)] rounded-2xl p-6 flex items-center justify-center min-h-[4rem] transition-all cursor-pointer"
-                  title="Facebook"
-                >
-                  <Facebook className="w-6 h-6" strokeWidth={2} />
-                </a>
-                <a
-                  href="https://discord.gg/XUxWQ2xNWJ"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-icon-link border border-[rgba(168,156,200,0.2)] rounded-2xl p-6 flex items-center justify-center min-h-[4rem] transition-all cursor-pointer"
-                  title="Discord"
-                >
-                  <DiscordIcon size={24} />
-                </a>
+                <div className="grid grid-cols-3 gap-2 min-w-0 sm:contents">
+                  <a
+                    href="https://github.com/css-mmcm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
+                    title="GitHub"
+                  >
+                    <Github className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" strokeWidth={2} />
+                  </a>
+                  <a
+                    href="https://www.facebook.com/CSS.MMCM"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
+                    title="Facebook"
+                  >
+                    <Facebook className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" strokeWidth={2} />
+                  </a>
+                  <a
+                    href="https://discord.gg/XUxWQ2xNWJ"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
+                    title="Discord"
+                  >
+                    <DiscordIcon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" size={24} />
+                  </a>
+                </div>
               </div>
 
-              <div className="border border-[rgba(168,156,200,0.2)] rounded-2xl p-6 flex items-center justify-center">
-                <div className="flex items-center gap-2">
-                  <span className="text-body-apple text-[rgba(184,180,201,0.8)] cursor-default">Made with</span>
-                  <span className="text-[#9388C4]">💜</span>
-                  <span className="text-body-apple text-[rgba(184,180,201,0.8)] cursor-default">by</span>
+              {/* Made with: centered, single row */}
+              <div className="flex items-center justify-center rounded-xl border border-[rgba(168,156,200,0.2)] p-3 sm:rounded-2xl sm:p-4 md:p-5 lg:p-6">
+                <div className="flex flex-nowrap items-center justify-center gap-1.5 text-center sm:gap-2">
+                  <span className="shrink-0 cursor-default text-xs text-[rgba(184,180,201,0.8)] sm:text-sm md:text-base">Made with</span>
+                  <span className="shrink-0 text-[#9388C4]">💜</span>
+                  <span className="shrink-0 cursor-default text-xs text-[rgba(184,180,201,0.8)] sm:text-sm md:text-base">by</span>
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="text-body-apple text-[#8b7ee6] hover:text-[#b5a8d4] transition-colors cursor-pointer hover:underline"
+                    className="shrink-0 whitespace-nowrap py-1 text-xs text-[#8b7ee6] hover:text-[#b5a8d4] transition-colors cursor-pointer hover:underline touch-manipulation min-h-[44px] sm:text-sm md:text-base"
                   >
                     CSS Project Development Team
                   </button>
