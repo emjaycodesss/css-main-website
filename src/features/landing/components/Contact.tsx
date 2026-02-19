@@ -94,8 +94,8 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-subhead text-white cursor-default">Email</p>
-                    <a href="mailto:css@university.edu" className="text-subhead text-[#b8b4c9] hover:text-[#8b7ee6] transition-colors cursor-pointer">
-                      css@university.edu
+                    <a href="mailto:ccis-css@mcm.edu.ph" className="text-subhead text-[#b8b4c9] hover:text-[#8b7ee6] transition-colors cursor-pointer">
+                    ccis-css@mcm.edu.ph
                     </a>
                   </div>
                 </div>
