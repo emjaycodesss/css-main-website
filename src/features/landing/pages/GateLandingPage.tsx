@@ -3,9 +3,7 @@ import { Button } from '../../../shared/components/ui/button';
 import { Input } from '../../../shared/components/ui/input';
 import { SearchableSelect } from '../../../shared/components/ui/searchable-select';
 import { CheckCircle, KeyRound } from 'lucide-react';
-
-/** Mock verification: accept this code to proceed (replace with API in production) */
-const VALID_CODE = 'CSS24';
+import { verifyGateCode, submitVerifyAttendance } from '../../../shared/api/gateVerify';
 
 /** Program options for searchable select */
 const PROGRAMS = [
@@ -29,10 +27,12 @@ const GateLandingPage: React.FC = () => {
   const [isVerifying, setIsVerifying] = useState(false);
   const codeInputRef = useRef<HTMLInputElement>(null);
 
+  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [section, setSection] = useState('');
   const [program, setProgram] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitError, setSubmitError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   /** Auto-focus verification input on mount (mobile keyboard ready) */
@@ -43,7 +43,8 @@ const GateLandingPage: React.FC = () => {
     }
   }, [step]);
 
-  const handleVerify = (e: React.FormEvent) => {
+  /** Submit code to Stickrun testapi.stickrun.net/verify and advance to form on success */
+  const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setCodeError('');
     const trimmed = code.trim().toUpperCase();
@@ -52,38 +53,49 @@ const GateLandingPage: React.FC = () => {
       return;
     }
     setIsVerifying(true);
-    // Simulate network delay
-    setTimeout(() => {
-      if (trimmed === VALID_CODE) {
-        setCodeSuccess(true);
-        setCodeError('');
-        setStep('form');
-      } else {
-        setCodeError('Invalid code. Please try again.');
-        setCodeSuccess(false);
-      }
-      setIsVerifying(false);
-    }, 400);
+    const result = await verifyGateCode(trimmed);
+    setIsVerifying(false);
+    if (result.success) {
+      setCodeSuccess(true);
+      setCodeError('');
+      setStep('form');
+    } else {
+      setCodeError(result.message);
+      setCodeSuccess(false);
+    }
   };
 
   const validateForm = (): boolean => {
     const next: Record<string, string> = {};
+    if (!email.trim()) next.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) next.email = 'Please enter a valid email';
     if (!name.trim()) next.name = 'Name is required';
     if (!section) next.section = 'Please select your section';
     if (!program) next.program = 'Please select your program';
     setErrors(next);
+    setSubmitError('');
     return Object.keys(next).length === 0;
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  /** POST to testapi.stickrun.net/verify/verify-attendance with code, email, name, section, program */
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
+    setSubmitError('');
     setIsSubmitting(true);
-    // Simulate submit
-    setTimeout(() => {
-      setIsSubmitting(false);
+    const result = await submitVerifyAttendance({
+      code: code.trim().toUpperCase(),
+      email: email.trim().toLowerCase(),
+      name: name.trim(),
+      section: section.trim(),
+      program,
+    });
+    setIsSubmitting(false);
+    if (result.success) {
       setStep('success');
-    }, 800);
+    } else {
+      setSubmitError(result.message);
+    }
   };
 
   const progressLabel =
@@ -185,6 +197,18 @@ const GateLandingPage: React.FC = () => {
             </p>
             <form onSubmit={handleFormSubmit} className="space-y-5">
               <Input
+                label="Email"
+                id="gate-email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email) setErrors((p) => ({ ...p, email: '' }));
+                }}
+                error={errors.email}
+                autoComplete="email"
+              />
+              <Input
                 label="Full name"
                 id="gate-name"
                 type="text"
@@ -220,6 +244,14 @@ const GateLandingPage: React.FC = () => {
                 placeholder=""
                 error={errors.program}
               />
+              {submitError && (
+                <div
+                  className="p-4 bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.2)] rounded-[12px] text-[var(--text-subhead)] text-[#f87171]"
+                  role="alert"
+                >
+                  {submitError}
+                </div>
+              )}
               <Button
                 type="submit"
                 disabled={isSubmitting}

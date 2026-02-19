@@ -7,3 +7,8 @@
  */
 /// <reference types="vite/client" />
 
+/** Optional: override Stickrun gate verify API base URL (default: https://testapi.stickrun.net) */
+interface ImportMetaEnv {
+  readonly VITE_GATE_VERIFY_URL?: string;
+}
+
