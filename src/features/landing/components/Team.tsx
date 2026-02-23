@@ -49,7 +49,7 @@ const SLOT_STYLES_DESKTOP: Record<number, SlotStyle> = {
 const SLOT_STYLES_MOBILE_WINGS: Record<number, SlotStyle> = {
   [-2]: { left: '12%', top: '80%', rotate: -20, scale: 0.8, opacity: 0, zIndex: 0, pointerEvents: 'none' },
   [-1]: { left: '28%', top: '50%', rotate: -10, scale: 0.8, opacity: 0, zIndex: 0, pointerEvents: 'none' },
-  [0]: { left: '50%', top: '28%', rotate: 0, scale: 1, opacity: 1, zIndex: 10 },
+  [0]: { left: '50%', top: '18%', rotate: 0, scale: 1, opacity: 1, zIndex: 10 },
   [1]: { left: '72%', top: '50%', rotate: 10, scale: 0.8, opacity: 0, zIndex: 0, pointerEvents: 'none' },
   [2]: { left: '88%', top: '80%', rotate: 20, scale: 0.8, opacity: 0, zIndex: 0, pointerEvents: 'none' },
 };
@@ -72,7 +72,7 @@ function OfficerCardContent({
 
   return (
     <div className="relative z-10 flex flex-col items-center text-center w-full min-w-0">
-      <h3 className="font-['Nasalization',sans-serif] text-lg sm:text-xl md:text-2xl lg:text-3xl text-white mb-2 break-words line-clamp-2">
+      <h3 className="font-[var(--font-display)] text-lg sm:text-xl md:text-2xl lg:text-3xl text-white mb-2 break-words line-clamp-2">
         {officer.name}
       </h3>
       {showDetails && (
@@ -207,8 +207,8 @@ const Team: React.FC = () => {
         }
       `}</style>
       <div className="w-full max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 2xl:px-12 relative z-10">
-        <div className="inline-flex items-center mb-2 md:mb-4 w-full justify-center md:justify-start">
-          <div className="relative px-2 py-1 md:px-3 md:py-1.5">
+        <div className="inline-flex items-center mb-2 md:mb-4 w-full justify-center">
+          <div className="section-label-wrapper relative px-2 py-1 md:px-3 md:py-1.5">
             <span className="absolute top-0 left-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-l border-[#8b7ee6]" />
             <span className="absolute top-0 right-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-r border-[#8b7ee6]" />
             <span className="absolute bottom-0 left-0 w-1.5 h-1.5 md:w-3 md:h-2 border-b border-l border-[#8b7ee6]" />
@@ -219,11 +219,45 @@ const Team: React.FC = () => {
           </div>
         </div>
 
-        <h3 className="font-['Nasalization',sans-serif] font-normal uppercase leading-[0.95] tracking-[-0.02em] text-[clamp(2rem,5vw,4rem)] text-white mb-2 md:mb-4 pb-4 md:pb-6 cursor-default text-center md:text-left">
-          Meet the Officers
+        {/* THE MODERATOR — headline then single moderator card; same style/size as center officer card */}
+        <h3 className="section-headline uppercase text-white mb-2 md:mb-4 cursor-default text-center">
+          The Moderator
         </h3>
+        <div className="flex justify-center mb-20 md:mb-32">
+          <div
+            className={`${isMobile ? 'w-[90vw] max-w-[90vw]' : 'max-w-[550px] w-full'} mx-auto cursor-default`}
+          >
+            <div className="spotlight-border w-full rounded-2xl p-[2px]">
+              <div className="card-standard card-spotlight w-full rounded-[14px] p-5 md:p-8 shadow-[0_0_24px_rgba(139,126,230,0.15)]">
+                <div className="relative z-10 flex flex-col items-center text-center w-full min-w-0">
+                  <h3 className="font-[var(--font-display)] text-lg sm:text-xl md:text-2xl lg:text-3xl text-white mb-2 break-words line-clamp-2 cursor-default">
+                    Engr. Neil P. Magloyuan
+                  </h3>
+                  <div className="mb-4 space-y-0.5">
+                    <a
+                      href="mailto:npmagloyuan@mcm.edu.ph"
+                      data-officer-email
+                      className="text-body-apple text-[#a89cc8] leading-relaxed hover:text-[#8b7ee6] transition-colors cursor-pointer"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      npmagloyuan@mcm.edu.ph
+                    </a>
+                  </div>
+                  <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[rgba(139,126,230,0.3)] to-transparent" />
+                  <p className="text-body-apple font-medium leading-relaxed mt-3" data-officer-role style={{ color: '#8b7ee6' }}>
+                    CSS Moderator
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <div className="relative pt-2 md:pt-4 pb-4 overflow-visible">
+        {/* THE OFFICERS — headline then carousel; comfortable gap between heading and carousel */}
+        <h3 className="section-headline uppercase text-white mb-8 pb-0 md:mb-0 md:pb-0 cursor-default text-center">
+          The Officers
+        </h3>
+        <div className="relative pt-0 pb-0 overflow-visible md:-mt-6">
           <div
             className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 md:h-40 z-[5]"
             style={{
@@ -232,7 +266,7 @@ const Team: React.FC = () => {
             aria-hidden
           />
           <div
-            className={`relative w-full max-w-6xl mx-auto overflow-visible ${isMobile ? 'min-h-[520px]' : 'min-h-[540px] md:min-h-[640px]'}`}
+            className={`relative w-full max-w-6xl mx-auto overflow-visible ${isMobile ? 'min-h-[400px]' : 'min-h-[540px] md:min-h-[640px]'}`}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >

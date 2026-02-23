@@ -23,7 +23,7 @@ const WhatIsCSS: React.FC = () => {
       <div className="w-full max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 2xl:px-12 relative z-10">
         <div className="relative z-20 text-center md:text-left">
           <div className="inline-flex items-center mb-2 md:mb-4 justify-center md:justify-start">
-            <div className="relative px-2 py-1 md:px-3 md:py-1.5">
+            <div className="section-label-wrapper relative px-2 py-1 md:px-3 md:py-1.5">
               <span className="absolute top-0 left-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-l border-[#8b7ee6]" />
               <span className="absolute top-0 right-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-r border-[#8b7ee6]" />
               <span className="absolute bottom-0 left-0 w-1.5 h-1.5 md:w-3 md:h-2 border-b border-l border-[#8b7ee6]" />
@@ -34,7 +34,7 @@ const WhatIsCSS: React.FC = () => {
             </div>
           </div>
 
-          <h3 className="font-['Nasalization',sans-serif] font-normal uppercase leading-[0.95] tracking-[-0.02em] text-[clamp(2rem,5vw,4rem)] text-white mb-6 md:mb-8 cursor-default">
+          <h3 className="section-headline uppercase text-white mb-6 md:mb-8 cursor-default">
             What is CSS?
           </h3>
 

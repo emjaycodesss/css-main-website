@@ -49,7 +49,7 @@ const developers: Developer[] = [
 /**
  * Developer Modal Component
  * Displays information about the developers behind the project.
- * Design matches site system: #1a1d2e bg, Nasalization title, gradient divider, card-standard-style cards.
+ * Design matches site system: #1a1d2e bg, display font (Audiowide) title, gradient divider, card-standard-style cards.
  */
 const DeveloperModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -74,41 +74,41 @@ const DeveloperModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ is
           .dev-modal-social:hover { color: #9388C4 !important; }
         `}</style>
 
-        <div className="flex items-center justify-between gap-3 p-4 pb-3 sticky top-0 z-10 min-w-0 border-b border-transparent bg-[#1a1d2e] sm:gap-4 sm:p-6 sm:pb-4">
+        <div className="flex items-center justify-between gap-2 p-3 pb-2 sticky top-0 z-10 min-w-0 border-b border-transparent bg-[#1a1d2e] sm:gap-3 sm:p-4 sm:pb-3">
           <div className="min-w-0 cursor-default">
-            <h2 className="font-['Nasalization',sans-serif] mb-2 cursor-default font-normal uppercase leading-[0.95] tracking-[-0.02em] text-white text-[clamp(1.25rem,4vw,3rem)] sm:text-[clamp(1.75rem,4vw,3rem)]">
+            <h2 className="modal-display-text mb-1 cursor-default font-normal uppercase leading-tight tracking-[-0.02em] text-white text-xl sm:text-2xl md:text-3xl">
               Development Team
             </h2>
-            <p className="font-[var(--font-sans)] cursor-default text-sm leading-relaxed text-[#b8b4c9] sm:text-base md:text-lg lg:text-xl">Meet the developers behind this project</p>
+            <p className="font-[var(--font-sans)] cursor-default text-sm leading-relaxed text-[#b8b4c9] sm:text-base">Meet the developers behind this project</p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="shrink-0 touch-manipulation rounded-xl p-2 text-[#8b7ee6] cursor-pointer transition-colors duration-200 hover:text-[#b5a8d4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(139,126,230,0.4)]"
+            className="shrink-0 touch-manipulation rounded-lg p-1.5 text-[#8b7ee6] cursor-pointer transition-colors duration-200 hover:text-[#b5a8d4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgba(139,126,230,0.4)]"
             aria-label="Close modal"
           >
-            <X className="h-5 w-5" strokeWidth={2} />
+            <X className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={2} />
           </button>
         </div>
 
         <div className="mx-0 h-[1px] w-full bg-gradient-to-r from-transparent via-[rgba(139,126,230,0.3)] to-transparent" />
 
-        <div className="p-4 pt-4 sm:p-6 sm:pt-6">
-          <div className="grid grid-cols-1 gap-3 min-w-0 md:grid-cols-2 md:gap-4">
+        <div className="p-3 pt-3 sm:p-4 sm:pt-4">
+          <div className="grid grid-cols-1 gap-2 min-w-0 md:grid-cols-2 md:gap-3">
             {developers.map((developer) => (
               <div
                 key={developer.id}
-                className="dev-modal-card p-6 cursor-default transition-all duration-300 hover:border-[rgba(139,126,230,0.2)]"
+                className="dev-modal-card p-4 cursor-default transition-all duration-300 hover:border-[rgba(139,126,230,0.2)] sm:p-5"
               >
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
-                    <h3 className="font-['Nasalization',sans-serif] font-normal text-2xl md:text-3xl tracking-[-0.005em] text-white mb-2">
+                    <h3 className="font-[var(--font-sans)] font-normal text-lg md:text-xl tracking-[-0.005em] text-white mb-1">
                       {developer.name}
                     </h3>
-                    <p className="dev-role font-[var(--font-sans)] font-medium text-base md:text-lg mb-2">
+                    <p className="dev-role font-[var(--font-sans)] font-medium text-sm mb-1 text-[#8b7ee6]">
                       {developer.role}
                     </p>
-                    <div className="flex items-center gap-2 text-sm md:text-base text-[#b8b4c9]">
+                    <div className="flex items-center gap-2 text-sm text-[#b8b4c9]">
                       <span>{developer.year}</span>
                       <span className="text-[rgba(168,156,200,0.4)]">•</span>
                       <span>{developer.major}</span>
@@ -117,25 +117,25 @@ const DeveloperModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ is
 
                   <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[rgba(139,126,230,0.3)] to-transparent" />
 
-                  <div className="flex gap-2 pt-1">
+                  <div className="flex gap-1.5 pt-0.5">
                     {developer.github && (
                       <a
                         href={`https://github.com/${developer.github}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="dev-modal-social w-9 h-9 rounded-lg bg-[rgba(30,32,50,0.9)] border border-[rgba(168,156,200,0.15)] flex items-center justify-center text-[#b5a8d4] transition-all duration-300 cursor-pointer hover:scale-105"
+                        className="dev-modal-social w-8 h-8 rounded-lg bg-[rgba(30,32,50,0.9)] border border-[rgba(168,156,200,0.15)] flex items-center justify-center text-[#b5a8d4] transition-all duration-300 cursor-pointer hover:scale-105"
                         title="GitHub"
                       >
-                        <Github className="w-[18px] h-[18px]" strokeWidth={2} />
+                        <Github className="w-4 h-4" strokeWidth={2} />
                       </a>
                     )}
                     {developer.email && (
                       <a
                         href={`mailto:${developer.email}`}
-                        className="dev-modal-social w-9 h-9 rounded-lg bg-[rgba(30,32,50,0.9)] border border-[rgba(168,156,200,0.15)] flex items-center justify-center text-[#b5a8d4] transition-all duration-300 cursor-pointer hover:scale-105"
+                        className="dev-modal-social w-8 h-8 rounded-lg bg-[rgba(30,32,50,0.9)] border border-[rgba(168,156,200,0.15)] flex items-center justify-center text-[#b5a8d4] transition-all duration-300 cursor-pointer hover:scale-105"
                         title="Email"
                       >
-                        <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                       </a>
@@ -172,8 +172,8 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
   // Uses design-system container so padding/margins never exceed page layout
   if (minimal) {
     return (
-      <footer className="w-full overflow-x-hidden border-t border-[rgba(168,156,200,0.08)] rounded-b-2xl">
-        <div className="container-responsive w-full py-4">
+      <footer className="w-full overflow-x-hidden border-t-2 border-[rgba(168,156,200,0.2)] rounded-b-2xl">
+        <div className="w-full max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 2xl:px-12 py-4">
           <p className="font-[var(--font-sans)] font-normal text-xs text-[rgba(184,180,201,0.5)] text-center cursor-default">
             © {new Date().getFullYear()} Computing Students' Society. All rights reserved.
           </p>
@@ -243,13 +243,13 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
             mixBlendMode: 'multiply',
           }}
         />
-        {/* Design-system container: same max-width and horizontal padding as rest of site — no overflow past page margins */}
-        <div className="container-responsive relative z-10 w-full min-w-0">
+        {/* Same max-width and horizontal padding as rest of site (Hero, Team, Contact, etc.) */}
+        <div className="w-full max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 2xl:px-12 relative z-10 min-w-0">
           {/* Mobile: single column; lg: 12-col grid. min-w-0 on grid prevents flex/grid blowout. */}
           <div className="grid grid-cols-1 gap-3 gap-y-5 min-w-0 sm:gap-4 sm:gap-y-6 md:gap-5 lg:grid-cols-12 lg:gap-6 lg:gap-y-0">
-            {/* Logo + tagline block: full width on mobile, lg = 4 cols. min-w-0 allows text to shrink/wrap. */}
-            <div className="flex min-w-0 flex-col items-start border border-[rgba(168,156,200,0.2)] rounded-xl p-3 sm:rounded-2xl sm:p-4 md:p-5 lg:col-span-4 lg:p-6">
-              <div className="flex min-w-0 flex-col items-start gap-3 sm:gap-4 md:gap-5 lg:gap-6 text-left">
+            {/* Logo + tagline block: full width on mobile, lg = 4 cols; content left-aligned, block centered in container. */}
+            <div className="flex min-w-0 flex-col items-center justify-center border-2 border-[rgba(168,156,200,0.2)] rounded-xl p-3 sm:rounded-2xl sm:p-4 md:p-5 lg:col-span-4 lg:p-6">
+              <div className="flex min-w-0 max-w-full flex-col items-start gap-3 sm:gap-4 md:gap-5 lg:gap-6 text-left">
                 <img src="/assets/icons/logo.svg" alt="CSS Logo" className="h-12 w-auto shrink-0 sm:h-14 md:h-16 lg:h-20 cursor-default" />
                 <p className="font-[var(--font-sans)] min-w-0 text-[length:var(--text-subhead)] sm:text-sm md:text-base text-[rgba(184,180,201,0.9)] leading-relaxed text-left cursor-default">
                   A Diverse Collective Shaping the Global Technological Landscape of Tomorrow
@@ -260,8 +260,8 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
             {/* Right column: pages, copyright/socials, made-with. Full width on mobile. */}
             <div className="flex min-w-0 flex-col gap-3 sm:gap-4 lg:col-span-8">
               {/* PAGES: stacked on mobile, row on sm+; nav can wrap without overflowing */}
-              <div className="flex min-w-0 flex-col gap-3 rounded-xl border border-[rgba(168,156,200,0.2)] p-3 sm:flex-row sm:items-center sm:justify-between sm:rounded-2xl sm:gap-4 sm:p-4 md:p-5 lg:p-6">
-                <h3 className="font-['Nasalization',sans-serif] shrink-0 cursor-default text-xs font-semibold uppercase tracking-wide text-white sm:text-sm md:text-base">
+              <div className="flex min-w-0 flex-col gap-3 rounded-xl border-2 border-[rgba(168,156,200,0.2)] p-3 sm:flex-row sm:items-center sm:justify-between sm:rounded-2xl sm:gap-4 sm:p-4 md:p-5 lg:p-6">
+                <h3 className="footer-display-text shrink-0 cursor-default text-xs font-semibold uppercase tracking-wide text-white sm:text-sm md:text-base">
                   PAGES
                 </h3>
                 <nav className="flex min-w-0 flex-wrap gap-x-3 gap-y-1 sm:gap-x-6 sm:gap-y-2" aria-label="Footer pages">
@@ -274,9 +274,9 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
 
               {/* Copyright + socials: mobile = copyright full-width then 3 icons in one row; sm+ = single row */}
               <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-[7fr_1fr_1fr_1fr]">
-                <div className="flex min-h-[3rem] min-w-0 flex-wrap items-center justify-center gap-2 rounded-xl border border-[rgba(168,156,200,0.2)] p-3 sm:min-h-[3.5rem] sm:justify-between sm:rounded-2xl sm:p-4 md:min-h-[4rem] md:p-5 lg:p-6">
-                  <span className="font-['Nasalization',sans-serif] shrink-0 cursor-default text-xs text-white sm:text-sm md:text-base">{new Date().getFullYear()}</span>
-                  <span className="min-w-0 cursor-default text-center text-xs text-[rgba(184,180,201,0.8)] sm:text-left sm:text-sm md:text-base">
+                <div className="flex min-h-[3rem] min-w-0 flex-wrap items-center justify-between gap-2 rounded-xl border-2 border-[rgba(168,156,200,0.2)] p-3 sm:min-h-[3.5rem] sm:rounded-2xl sm:p-4 md:min-h-[4rem] md:p-5 lg:p-6">
+                  <span className="footer-display-text shrink-0 cursor-default text-[length:var(--text-subhead)] font-semibold text-white sm:text-sm md:text-base">{new Date().getFullYear()}</span>
+                  <span className="min-w-0 cursor-default text-right text-[length:var(--text-subhead)] text-[rgba(184,180,201,0.8)] sm:text-sm md:text-base">
                     Copyright © CSS
                   </span>
                 </div>
@@ -285,7 +285,7 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
                     href="https://github.com/css-mmcm"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
+                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border-2 border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
                     title="GitHub"
                   >
                     <Github className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" strokeWidth={2} />
@@ -294,7 +294,7 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
                     href="https://www.facebook.com/CSS.MMCM"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
+                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border-2 border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
                     title="Facebook"
                   >
                     <Facebook className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" strokeWidth={2} />
@@ -303,7 +303,7 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
                     href="https://discord.gg/XUxWQ2xNWJ"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
+                    className="footer-icon-link flex min-h-[3rem] min-w-0 items-center justify-center rounded-xl border-2 border-[rgba(168,156,200,0.2)] p-3 transition-all cursor-pointer touch-manipulation sm:min-h-[4rem] sm:rounded-2xl sm:p-4 md:p-5 lg:p-6"
                     title="Discord"
                   >
                     <DiscordIcon className="h-5 w-5 shrink-0 sm:h-6 sm:w-6" size={24} />
@@ -312,14 +312,14 @@ const Footer: React.FC<FooterProps> = ({ minimal = false }) => {
               </div>
 
               {/* Made with: centered, single row */}
-              <div className="flex items-center justify-center rounded-xl border border-[rgba(168,156,200,0.2)] p-3 sm:rounded-2xl sm:p-4 md:p-5 lg:p-6">
+              <div className="flex items-center justify-center rounded-xl border-2 border-[rgba(168,156,200,0.2)] p-3 sm:rounded-2xl sm:p-4 md:p-5 lg:p-6">
                 <div className="flex flex-nowrap items-center justify-center gap-1.5 text-center sm:gap-2">
-                  <span className="shrink-0 cursor-default text-xs text-[rgba(184,180,201,0.8)] sm:text-sm md:text-base">Made with</span>
-                  <span className="shrink-0 text-[#9388C4]">💜</span>
-                  <span className="shrink-0 cursor-default text-xs text-[rgba(184,180,201,0.8)] sm:text-sm md:text-base">by</span>
+                  <span className="shrink-0 cursor-default text-[length:var(--text-subhead)] text-[rgba(184,180,201,0.8)] sm:text-sm md:text-base">Made with</span>
+                  <span className="shrink-0 text-[length:var(--text-subhead)] text-[#9388C4] sm:text-sm md:text-base">💜</span>
+                  <span className="shrink-0 cursor-default text-[length:var(--text-subhead)] text-[rgba(184,180,201,0.8)] sm:text-sm md:text-base">by</span>
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="shrink-0 whitespace-nowrap py-1 text-xs text-[#8b7ee6] hover:text-[#b5a8d4] transition-colors cursor-pointer hover:underline touch-manipulation min-h-[44px] sm:text-sm md:text-base"
+                    className="shrink-0 whitespace-nowrap py-1 text-[length:var(--text-subhead)] text-[#8b7ee6] hover:text-[#b5a8d4] transition-colors cursor-pointer hover:underline touch-manipulation min-h-[44px] sm:text-sm md:text-base"
                   >
                     CSS Project Development Team
                   </button>

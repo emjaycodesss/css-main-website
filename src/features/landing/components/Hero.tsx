@@ -82,7 +82,7 @@ const Hero: React.FC = () => {
     <section
       id="home"
       className="hero-section relative overflow-hidden bg-[#1a1d2e]"
-      style={{ height: '100vh' }}
+      style={{ height: '100vh', contain: 'layout style paint' }}
     >
       <div className="absolute inset-0 z-0">
         <ShaderGradientCanvas pixelDensity={1} fov={45}>
@@ -158,13 +158,13 @@ const Hero: React.FC = () => {
           <div className="hero-heading-block relative mb-8 md:mb-12 cursor-default overflow-hidden">
             <h1
               ref={allThingsRef}
-              className="hero-heading-title will-change-transform font-['Nasalization',sans-serif] font-normal uppercase leading-[0.9] tracking-[-0.03em] text-[clamp(3rem,12vw,9rem)] text-white"
+              className="hero-heading-title will-change-transform font-[var(--font-display)] font-normal uppercase leading-[0.9] tracking-[-0.03em] text-[clamp(3rem,12vw,9rem)] text-white"
             >
               All Things
             </h1>
             <span
               ref={computingRef}
-              className="hero-heading-title hero-heading-computing block will-change-transform font-['Nasalization',sans-serif] font-normal uppercase leading-[0.9] tracking-[-0.03em] text-[clamp(3.5rem,14vw,10.5rem)] bg-gradient-to-b from-[#e3d7ff] via-[#b7a4ff] to-[#8b7ee6] bg-clip-text text-transparent"
+              className="hero-heading-title hero-heading-computing block will-change-transform font-[var(--font-display)] font-normal uppercase leading-[0.9] tracking-[-0.03em] text-[clamp(3.5rem,14vw,10.5rem)] bg-gradient-to-b from-[#e3d7ff] via-[#b7a4ff] to-[#8b7ee6] bg-clip-text text-transparent"
             >
               Computing
             </span>

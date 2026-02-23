@@ -103,7 +103,7 @@ const Badge = ({
         {/* Solid inner pill */}
         <span
           className={cn(
-            "relative z-10 rounded-full font-bold font-['Nasalization',sans-serif] uppercase tracking-[-0.02em] bg-[#1a1d2e]",
+            "relative z-10 rounded-full font-bold gemini-badge-text uppercase tracking-[-0.02em] bg-[#1a1d2e]",
             sizeClasses[size]
           )}
           style={{ color: textColor }}

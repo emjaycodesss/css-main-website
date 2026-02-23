@@ -15,14 +15,14 @@ const StatItem: React.FC<{
 }> = ({ value, suffix, label }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-3 md:gap-4 py-10 md:py-16">
-      <span className="font-['Nasalization',sans-serif] text-[clamp(3rem,8vw,6rem)] leading-none tracking-tight text-white whitespace-nowrap">
+      <span className="stat-value text-[clamp(3rem,8vw,6rem)] leading-none tracking-tight text-white whitespace-nowrap">
         <NumberTicker
           value={value}
-          className="font-['Nasalization',sans-serif] text-[clamp(3rem,8vw,6rem)] leading-none tracking-tight text-white"
+          className="stat-value text-[clamp(3rem,8vw,6rem)] leading-none tracking-tight text-white"
         />
         {suffix}
       </span>
-      <span className="font-['SF_Pro_Display',sans-serif] text-sm sm:text-base md:text-lg text-white/60 font-medium tracking-wide uppercase">
+      <span className="font-[var(--font-sans)] text-sm sm:text-base md:text-lg text-white/60 font-medium tracking-wide uppercase">
         {label}
       </span>
     </div>
@@ -35,7 +35,7 @@ const Stats: React.FC = () => {
       className="relative bg-[#60529F]"
     >
       <div className="border-b border-dashed border-white/25 px-6 py-8 md:px-8 md:py-10">
-        <h3 className="font-normal leading-[0.95] tracking-[-0.02em] text-[clamp(2rem,5vw,4rem)] text-white text-center cursor-default" style={{ fontFamily: 'var(--font-sans)' }}>
+        <h3 className="font-[var(--font-sans)] font-normal leading-[0.95] tracking-[-0.02em] text-[clamp(2rem,5vw,4rem)] text-white text-center cursor-default">
           Our numbers speak for themselves.
         </h3>
       </div>

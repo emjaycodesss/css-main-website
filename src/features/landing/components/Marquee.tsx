@@ -16,7 +16,7 @@ const Marquee: React.FC = () => {
   const blockContent = Array(REPEAT_COUNT).fill(MARQUEE_UNIT).join('');
 
   const textStyle: React.CSSProperties = {
-    fontFamily: "'Nasalization', 'Impact', 'Arial Black', sans-serif",
+    fontFamily: "var(--font-display)",
     fontWeight: 700,
     textTransform: 'uppercase',
     color: '#ffffff',
@@ -69,7 +69,6 @@ const Marquee: React.FC = () => {
           display: 'inline-flex',
           alignItems: 'center',
           whiteSpace: 'nowrap',
-          willChange: 'transform',
           animation: `marquee-scroll ${MARQUEE_DURATION_S}s linear infinite`,
         }}
       >

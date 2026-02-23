@@ -661,7 +661,7 @@ const About: React.FC = () => {
 
           <div className="order-1 lg:order-2 w-full flex flex-col justify-center lg:sticky lg:top-24 lg:items-end">
             <div className="inline-flex items-center mb-2 md:mb-4 w-full justify-center lg:justify-end">
-              <div className="relative px-2 py-1 md:px-3 md:py-1.5">
+              <div className="section-label-wrapper relative px-2 py-1 md:px-3 md:py-1.5">
                 <span className="absolute top-0 left-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-l border-[#8b7ee6]" />
                 <span className="absolute top-0 right-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-r border-[#8b7ee6]" />
                 <span className="absolute bottom-0 left-0 w-1.5 h-1.5 md:w-3 md:h-2 border-b border-l border-[#8b7ee6]" />
@@ -671,7 +671,7 @@ const About: React.FC = () => {
               </h2>
               </div>
             </div>
-            <h3 className="font-['Nasalization',sans-serif] font-normal uppercase leading-[0.95] tracking-[-0.02em] text-[clamp(2rem,5vw,4rem)] text-white mb-4 md:mb-6 cursor-default text-center lg:text-right">
+            <h3 className="section-headline uppercase text-white mb-4 md:mb-6 cursor-default text-center lg:text-right">
               Be Part of
               <br />
               Something

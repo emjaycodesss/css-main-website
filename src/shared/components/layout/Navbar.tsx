@@ -113,7 +113,7 @@ const Navbar: React.FC = () => {
           <HoverBorderGradient
             as="button"
             containerClassName="rounded-full"
-            className="bg-[#1a1d2e] flex items-center gap-2 px-5 py-2 font-['Nasalization',sans-serif] font-normal text-base tracking-[0.01em] text-white cursor-pointer"
+            className="nav-cta-display bg-[#1a1d2e] flex items-center gap-2 px-5 py-2 font-normal text-base tracking-[0.01em] text-white cursor-pointer"
             onClick={() => scrollToSection('contact')}
           >
             GET IN TOUCH
@@ -156,7 +156,7 @@ const Navbar: React.FC = () => {
             <HoverBorderGradient
               as="button"
               containerClassName="rounded-full"
-              className="bg-[#1a1d2e] flex items-center justify-center gap-2 px-5 py-2 font-['Nasalization',sans-serif] font-normal text-base text-white cursor-pointer"
+              className="nav-cta-display bg-[#1a1d2e] flex items-center justify-center gap-2 px-5 py-2 font-normal text-base text-white cursor-pointer"
               onClick={() => { scrollToSection('contact'); toggleMenu(); }}
             >
               GET IN TOUCH

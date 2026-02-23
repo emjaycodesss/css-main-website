@@ -100,7 +100,7 @@ export function BlurFade({
           ...(translateAxis === "x" ? { x: translateValue } : { y: translateValue }),
           opacity,
           filter,
-          willChange: "transform, opacity, filter",
+          willChange: "transform, opacity",
         }}
         className={className}
         {...props}
@@ -117,7 +117,7 @@ export function BlurFade({
       animate={isInView ? "visible" : "hidden"}
       variants={combinedVariants}
       transition={{ duration, delay }}
-      style={{ willChange: "transform, opacity, filter" }}
+      style={{ willChange: "transform, opacity" }}
       className={className}
       {...props}
     >

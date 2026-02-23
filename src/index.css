@@ -6,7 +6,7 @@
 /* ============================================================================
    DESIGN SYSTEM - Modern Dark Tech Dashboard
    ============================================================================
-   Typography: SF Pro Display + JetBrains Mono (Apple's native font hierarchy)
+   Typography: SF Pro Display + Nasalization (primary); Inter + Audiowide (fallbacks)
    Layout: Optimized spacing with max-width 1400px, 48px side padding
    Interactions: Minimal hover effects, proper cursor behavior
    ============================================================================ */
@@ -28,9 +28,10 @@
   --container-padding-xs: 16px;
 
   /* -------------------------------------------------------------------------
-     TYPOGRAPHY - SF Pro Display (Apple's font) + JetBrains Mono
+     TYPOGRAPHY - SF Pro Display + Nasalization (primary); Inter + Audiowide (fallbacks)
      ------------------------------------------------------------------------- */
-  --font-sans: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-sans: 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-display: 'Nasalization', 'Audiowide', 'Impact', 'Arial Black', sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 
   /* Font Weights */
@@ -40,7 +41,7 @@
   --font-bold: 700;
 
   /* -------------------------------------------------------------------------
-     APPLE TEXT HIERARCHY - SF Pro Display (Enhanced Responsive System)
+     TEXT HIERARCHY - SF Pro Display / Inter (Enhanced Responsive System)
      Following Apple Human Interface Guidelines with responsive scaling
      ------------------------------------------------------------------------- */
 
@@ -423,12 +424,18 @@ h1, h2, h3, h4, h5, h6, p, .badge, .tag {
   cursor: default;
 }
 
+/* Section labels (TEAM, CONTACT, GALLERY, etc.) and their frame: default cursor only (overrides HyperText cursor-pointer) */
+.section-label-wrapper,
+.section-label-wrapper * {
+  cursor: default !important;
+}
+
 button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab {
   cursor: pointer;
 }
 
 /* ============================================================================
-   TYPOGRAPHY CLASSES - Apple Text Hierarchy (SF Pro Display)
+   TYPOGRAPHY CLASSES - Text Hierarchy (Inter)
    Enhanced with responsive scaling and proper hierarchy
    ============================================================================ */
 
@@ -499,8 +506,9 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
   text-align: center;
 }
 
-/* Large, subtle black drop-shadow so "ALL THINGS" / "COMPUTING" stand out from logo pattern */
+/* Hero main title: display font (Audiowide) for "ALL THINGS" / "COMPUTING" */
 .hero-heading-title {
+  font-family: var(--font-display);
   text-shadow:
     0 2px 8px rgba(0, 0, 0, 0.35),
     0 8px 24px rgba(0, 0, 0, 0.4),
@@ -512,6 +520,41 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
   text-shadow:
     0 2px 4px rgba(0, 0, 0, 0.12),
     0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Section headlines (main title without corner frame): Audiowide display font */
+.section-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+/* Footer display text (PAGES label, year): Audiowide */
+.footer-display-text {
+  font-family: var(--font-display);
+}
+
+/* Modal display text (title, names): Audiowide */
+.modal-display-text {
+  font-family: var(--font-display);
+}
+
+/* Stats section: numeric values only – Nasalization with Audiowide fallback */
+.stat-value {
+  font-family: var(--font-display);
+}
+
+/* Navbar "GET IN TOUCH" CTA: Nasalization with Audiowide fallback */
+.nav-cta-display {
+  font-family: var(--font-display);
+}
+
+/* Google Gemini effect badges (CSS, IS, EMC, CCIS): Nasalization with Audiowide fallback */
+.gemini-badge-text {
+  font-family: var(--font-display);
 }
 
 /* Title 1 - 28px - Responsive */
@@ -776,15 +819,14 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
     inset 0 0 0 1px rgba(139, 126, 230, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.15);
 
-  /* Smooth transitions */
-  transition: all var(--transition-smooth);
+  /* GPU-friendly transitions only (no layout) */
+  transition: box-shadow var(--transition-smooth), filter var(--transition-smooth), border-color var(--transition-smooth);
   position: relative;
   overflow: hidden;
-
-  /* Ensure proper rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transform: translateZ(0); /* Force hardware acceleration for smoother rendering */
+  contain: layout style paint;
+  transform: translateZ(0);
 }
 
 /* Top accent line - consistent across all cards */
@@ -815,9 +857,10 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
   padding: var(--space-lg);
   box-shadow: inset 0 0 0 1px rgba(139, 126, 230, 0.1), 0 2px 8px rgba(0, 0, 0, 0.15);
   cursor: default;
-  transition: all var(--transition-smooth);
+  transition: box-shadow var(--transition-smooth), filter var(--transition-smooth), border-color var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 .card-solid::before {
@@ -839,9 +882,10 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
   border-radius: var(--radius-lg);
   box-shadow: inset 0 0 0 1px rgba(139, 126, 230, 0.12), 0 2px 8px rgba(0, 0, 0, 0.15);
   cursor: default;
-  transition: all var(--transition-smooth);
+  transition: box-shadow var(--transition-smooth), filter var(--transition-smooth), border-color var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 .stat-card::before {
@@ -870,9 +914,10 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
   padding: var(--space-lg);
   box-shadow: inset 0 0 0 1px rgba(139, 126, 230, 0.1), 0 2px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  transition: all var(--transition-smooth);
+  transition: box-shadow var(--transition-smooth), filter var(--transition-smooth), border-color var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 .card-clickable::before {
@@ -959,37 +1004,41 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
   cursor: pointer;
   outline: none;
   box-shadow: var(--btn-shadow-default);
-  transition: all var(--transition-smooth);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), filter var(--transition-smooth), border-color var(--transition-smooth);
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
 }
 
+/* Shine sweep: GPU-only (transform) to avoid layout thrash */
 .btn-primary::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left var(--transition-smooth);
+  transform: translateX(-100%);
+  transition: transform var(--transition-smooth);
+  pointer-events: none;
 }
 
 .btn-primary:hover {
   filter: brightness(1.1);
   box-shadow: var(--btn-shadow-hover);
   border-color: rgba(168, 156, 200, 0.4);
-  transform: translateY(-1px);
+  transform: translateZ(0) translateY(-1px);
 }
 
 .btn-primary:hover::before {
-  left: 100%;
+  transform: translateX(100%);
 }
 
 .btn-primary:active {
   box-shadow: var(--btn-shadow-active);
   filter: brightness(0.95);
-  transform: translateY(0);
+  transform: translateZ(0) translateY(0);
 }
 
 .btn-primary:focus-visible {
@@ -1020,7 +1069,7 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
   border: 1px solid rgba(139, 126, 230, 0.25);
   cursor: pointer;
   outline: none;
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .btn-glass:hover {
@@ -1059,7 +1108,7 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
   border: 1px solid var(--color-brand-mid);
   cursor: pointer;
   outline: none;
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
 .btn-outline:hover {
@@ -1156,7 +1205,7 @@ button, a, input, select, textarea, .clickable, [role="button"], .nav-item, .tab
    INPUT CURSOR FIX - Ensure I-beam cursor on all text inputs
    ============================================================================ */
 
-/* Fix cursor on input fields and ensure SF Pro Display font */
+/* Fix cursor on input fields and ensure body font */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -1164,7 +1213,7 @@ input[type="number"],
 textarea,
 select {
   cursor: text; /* I-beam cursor for text inputs */
-  font-family: var(--font-sans); /* Use SF Pro Display */
+  font-family: var(--font-sans);
 }
 
 /* Make sure icon wrappers don't block cursor */
@@ -1283,9 +1332,11 @@ select {
    to promote compositor layers and reduce jank. Prefer animating only
    transform (x, y, rotation, scale) and opacity.
    ============================================================================ */
+/* Promote compositor layer only for actively animated elements */
 .hero-word-inner,
 .will-change-transform {
   will-change: transform;
+  transform: translateZ(0);
 }
 
 /* ============================================================================
@@ -1293,25 +1344,25 @@ select {
    ============================================================================ */
 
 @keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: translateZ(0) rotate(0deg); }
+  to { transform: translateZ(0) rotate(360deg); }
 }
 
 .animate-spin-slow { animation: spin-slow 8s linear infinite; }
 
 @keyframes badge-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: translateZ(0) rotate(0deg); }
+  to { transform: translateZ(0) rotate(360deg); }
 }
 
 @keyframes scroll-memories {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-100%, 0, 0); }
 }
 
 @keyframes scroll-memories-reverse {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
+  from { transform: translate3d(-100%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 
 .animate-scroll-memories { animation: scroll-memories 30s linear infinite; }
@@ -1331,22 +1382,45 @@ select {
 
 .animate-float { animation: float 3s ease-in-out infinite; }
 
+/* Glow: animate opacity on a shadow layer (GPU) so box-shadow itself doesn't repaint */
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(139, 126, 230, 0.3), 0 0 40px rgba(139, 126, 230, 0.1); }
-  50% { box-shadow: 0 0 30px rgba(139, 126, 230, 0.5), 0 0 60px rgba(139, 126, 230, 0.2); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.75; }
 }
 
-.animate-glow { animation: glow 2s ease-in-out infinite; }
+.animate-glow {
+  position: relative;
+}
 
+.animate-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  box-shadow: 0 0 24px rgba(139, 126, 230, 0.4), 0 0 48px rgba(139, 126, 230, 0.2);
+  pointer-events: none;
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Shimmer: use transform instead of background-position (GPU) */
 @keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  background-size: 1000px 100%;
-  animation: shimmer 2s infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  background-size: 50% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+  pointer-events: none;
 }
 
 /* ============================================================================
@@ -1449,21 +1523,19 @@ select {
 }
 
 /* ============================================================================
-   MARQUEE - Infinite scroll bar (right to left)
-   ============================================================================
-   Used by: features/landing/components/Marquee.tsx
-   Track has two identical content blocks; -50% translation loops seamlessly.
+   MARQUEE - Infinite scroll (GPU: transform only)
    ============================================================================ */
 @keyframes marquee-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
-/* Pause marquee animation on hover so link is readable; pointer cursor on bar */
+.marquee-track {
+  will-change: transform;
+  contain: layout style paint;
+}
+
+/* Pause marquee on hover so link is readable */
 .marquee-bar:hover .marquee-track {
   animation-play-state: paused;
 }
