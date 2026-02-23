@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ShaderGradientCanvas, ShaderGradient } from 'shadergradient';
@@ -22,6 +22,23 @@ const Hero: React.FC = () => {
   const allThingsRef = useRef<HTMLHeadingElement>(null);
   const computingRef = useRef<HTMLSpanElement>(null);
   const bottomLineRef = useRef<HTMLParagraphElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [shaderAnimate, setShaderAnimate] = useState<'on' | 'off'>('on');
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShaderAnimate(entry.isIntersecting ? 'on' : 'off');
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   useGSAP(
     () => {
@@ -80,6 +97,7 @@ const Hero: React.FC = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="home"
       className="hero-section relative overflow-hidden bg-[#1a1d2e]"
       style={{ height: '100vh', contain: 'layout style paint' }}
@@ -87,7 +105,7 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <ShaderGradientCanvas pixelDensity={1} fov={45}>
           <ShaderGradient
-            animate="on"
+            animate={shaderAnimate}
             brightness={1.1}
             cAzimuthAngle={180}
             cDistance={3.9}
