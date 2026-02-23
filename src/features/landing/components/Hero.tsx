@@ -139,11 +139,12 @@ const Hero: React.FC = () => {
       </div>
 
       <div
-        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.7]"
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.35]"
         style={{
-          filter: 'url(#hero-grain)',
-          backgroundImage: 'url("data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'300\'><filter id=\'noise\'><feTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'4\' stitchTiles=\'stitch\'/></filter><rect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/></svg>")',
-          mixBlendMode: 'multiply',
+          backgroundImage: 'url("/assets/noise.png")',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '150px 150px',
+          mixBlendMode: 'overlay',
         }}
       />
 
