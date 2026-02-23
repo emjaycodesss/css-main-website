@@ -66,7 +66,7 @@ export const ParallaxScroll = ({
                     height="160"
                     width="160"
                     alt="Gallery"
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                   />
                 </BlurFade>
@@ -88,7 +88,7 @@ export const ParallaxScroll = ({
                       height="160"
                       width="160"
                       alt="Gallery"
-                      loading="lazy"
+                      loading="eager"
                       decoding="async"
                     />
                   </BlurFade>
@@ -111,7 +111,7 @@ export const ParallaxScroll = ({
                       height="160"
                       width="160"
                       alt="Gallery"
-                      loading="lazy"
+                      loading="eager"
                       decoding="async"
                     />
                   </BlurFade>
@@ -172,7 +172,7 @@ export const ParallaxScroll = ({
                     height="400"
                     width="400"
                     alt="Gallery"
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                   />
                 </BlurFade>
@@ -195,7 +195,7 @@ export const ParallaxScroll = ({
                     height="400"
                     width="400"
                     alt="Gallery"
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                   />
                 </BlurFade>

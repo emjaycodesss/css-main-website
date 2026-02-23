@@ -3,14 +3,14 @@ import { ParallaxScroll } from '../../../shared/components/ui/parallax-scroll';
 import { HyperText } from '../../../shared/components/ui/hyper-text';
 
 const images = [
-  "/assets/images/gallery/band.png",
+  "/assets/images/gallery/band.webp",
   "/assets/images/gallery/band2.jpg",
-  "/assets/images/gallery/ccis-2526.png",
+  "/assets/images/gallery/ccis-2526.webp",
   "/assets/images/gallery/cheerdance.jpg",
-  "/assets/images/gallery/lakad-dagat.png",
-  "/assets/images/gallery/lakad-dagat2.png",
-  "/assets/images/gallery/oathtaking.png",
-  "/assets/images/gallery/photobooth.png",
+  "/assets/images/gallery/lakad-dagat.webp",
+  "/assets/images/gallery/lakad-dagat2.webp",
+  "/assets/images/gallery/oathtaking.webp",
+  "/assets/images/gallery/photobooth.webp",
   "/assets/images/gallery/streetdance.jpg",
   "/assets/images/gallery/volleyball.jpg",
 ];

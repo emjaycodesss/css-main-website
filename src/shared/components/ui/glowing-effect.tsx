@@ -3,6 +3,42 @@
 import { useRef, useEffect, useMemo } from "react";
 import { motion, useMotionValue, useMotionTemplate } from "motion/react";
 
+// ─── Singleton mouse tracker ──────────────────────────────────────────────────
+// One mousemove listener on window, shared across all GlowingEffect instances.
+// Each instance registers a callback; the singleton dispatches to all of them.
+type MouseCallback = (x: number, y: number) => void;
+const mouseCallbacks = new Set<MouseCallback>();
+let sharedRafId: number | null = null;
+let sharedLastX = 0;
+let sharedLastY = 0;
+
+function dispatchMouse() {
+  sharedRafId = null;
+  mouseCallbacks.forEach((cb) => cb(sharedLastX, sharedLastY));
+}
+
+function onSharedMouseMove(e: MouseEvent) {
+  sharedLastX = e.clientX;
+  sharedLastY = e.clientY;
+  if (sharedRafId == null) sharedRafId = requestAnimationFrame(dispatchMouse);
+}
+
+function subscribeToMouse(cb: MouseCallback) {
+  if (mouseCallbacks.size === 0) {
+    window.addEventListener("mousemove", onSharedMouseMove, { passive: true });
+  }
+  mouseCallbacks.add(cb);
+}
+
+function unsubscribeFromMouse(cb: MouseCallback) {
+  mouseCallbacks.delete(cb);
+  if (mouseCallbacks.size === 0) {
+    window.removeEventListener("mousemove", onSharedMouseMove);
+    if (sharedRafId != null) { cancelAnimationFrame(sharedRafId); sharedRafId = null; }
+  }
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 /**
  * GlowingEffect Component
  * Creates an interactive glowing border effect that follows mouse movement
@@ -113,28 +149,15 @@ export function GlowingEffect({
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll);
 
-    let rafId: number | null = null;
-    let lastClientX = 0;
-    let lastClientY = 0;
-
-    const processPointer = () => {
-      rafId = null;
-
-      const localX = lastClientX - rect.left;
-      const localY = lastClientY - rect.top;
+    const handleMouseMove = (clientX: number, clientY: number) => {
+      const localX = clientX - rect.left;
+      const localY = clientY - rect.top;
 
       mouseX.set(localX);
       mouseY.set(localY);
 
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const deltaX = localX - centerX;
-      const deltaY = localY - centerY;
-      const _distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      void _distance;
-
-      const dx = Math.max(rect.left - lastClientX, 0, lastClientX - rect.right);
-      const dy = Math.max(rect.top - lastClientY, 0, lastClientY - rect.bottom);
+      const dx = Math.max(rect.left - clientX, 0, clientX - rect.right);
+      const dy = Math.max(rect.top - clientY, 0, clientY - rect.bottom);
       const distToCard = Math.sqrt(dx * dx + dy * dy);
 
       const norm = Math.max(0, Math.min(1, distToCard / outerProximity));
@@ -143,21 +166,13 @@ export function GlowingEffect({
       opacity.set(calculatedOpacity);
     };
 
-    const handleWindowMouseMove = (e: MouseEvent) => {
-      lastClientX = e.clientX;
-      lastClientY = e.clientY;
-      if (rafId == null) rafId = requestAnimationFrame(processPointer);
-    };
-
-    window.addEventListener("mousemove", handleWindowMouseMove, { passive: true });
-
+    subscribeToMouse(handleMouseMove);
     updateRect();
 
     return () => {
-      window.removeEventListener("mousemove", handleWindowMouseMove);
+      unsubscribeFromMouse(handleMouseMove);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
-      if (rafId != null) cancelAnimationFrame(rafId);
     };
   }, [disabled, proximity, glow, mouseX, mouseY, opacity, borderWidth, outerProximity]);
 

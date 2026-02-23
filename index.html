@@ -10,7 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
-    
+
+    <!-- Font Preload: tells the browser to fetch these before parsing CSS, eliminating FOUT -->
+    <link rel="preload" href="https://fonts.cdnfonts.com/css/sf-pro-display" as="style">
+    <link rel="preload" href="https://fonts.cdnfonts.com/css/nasalization" as="style">
+
     <!-- Primary: SF Pro Display (body) + Nasalization (display). Fallbacks: Inter + Audiowide (Google Fonts) when CDN unavailable -->
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/nasalization" rel="stylesheet">
