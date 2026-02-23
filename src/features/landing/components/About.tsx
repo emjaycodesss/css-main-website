@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'motion/react';
 import { GlowingEffect } from '../../../shared/components/ui/glowing-effect';
 import { HyperText } from '../../../shared/components/ui/hyper-text';
 
 const About: React.FC = () => {
+  const headingRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(headingRef, { once: true, margin: '0px 0px -80px 0px' });
 
   return (
     <section id="about" className="relative overflow-hidden bg-[#1a1d2e] pt-40 md:pt-48 pb-16 md:pb-24">
@@ -659,8 +662,13 @@ const About: React.FC = () => {
             </div>
           </div>
 
-          <div className="order-1 lg:order-2 w-full flex flex-col justify-center lg:sticky lg:top-24 lg:items-end">
-            <div className="inline-flex items-center mb-2 md:mb-4 w-full justify-center lg:justify-end">
+          <div className="order-1 lg:order-2 w-full flex flex-col justify-center lg:sticky lg:top-24 lg:items-end" ref={headingRef}>
+            <motion.div
+              className="inline-flex items-center mb-2 md:mb-4 w-full justify-center lg:justify-end"
+              initial={{ opacity: 0, x: 24 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
               <div className="section-label-wrapper relative px-2 py-1 md:px-3 md:py-1.5">
                 <span className="absolute top-0 left-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-l border-[#8b7ee6]" />
                 <span className="absolute top-0 right-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-r border-[#8b7ee6]" />
@@ -670,14 +678,19 @@ const About: React.FC = () => {
                 <HyperText as="span" startOnView>WHY JOIN?</HyperText>
               </h2>
               </div>
-            </div>
-            <h3 className="section-headline uppercase text-white mb-4 md:mb-6 cursor-default text-center lg:text-right">
+            </motion.div>
+            <motion.h3
+              className="section-headline uppercase text-white mb-4 md:mb-6 cursor-default text-center lg:text-right"
+              initial={{ opacity: 0, y: 32 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.12 }}
+            >
               Be Part of
               <br />
               Something
               <br />
               Bigger
-            </h3>
+            </motion.h3>
           </div>
         </div>
       </div>

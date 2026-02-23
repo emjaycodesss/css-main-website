@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, { useRef } from 'react';
+import { motion, useInView } from 'motion/react';
 import { NumberTicker } from '../../../shared/components/ui/number-ticker';
 
 const stats = [
@@ -30,14 +30,22 @@ const StatItem: React.FC<{
 };
 
 const Stats: React.FC = () => {
+  const headingRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(headingRef, { once: true, margin: '0px 0px -60px 0px' });
+
   return (
     <section
       className="relative bg-[#60529F]"
     >
-      <div className="border-b border-dashed border-white/25 px-6 py-8 md:px-8 md:py-10">
-        <h3 className="font-[var(--font-sans)] font-normal leading-[0.95] tracking-[-0.02em] text-[clamp(2rem,5vw,4rem)] text-white text-center cursor-default">
+      <div className="border-b border-dashed border-white/25 px-6 py-8 md:px-8 md:py-10" ref={headingRef}>
+        <motion.h3
+          className="font-[var(--font-sans)] font-normal leading-[0.95] tracking-[-0.02em] text-[clamp(2rem,5vw,4rem)] text-white text-center cursor-default"
+          initial={{ opacity: 0, y: 28 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           Our numbers speak for themselves.
-        </h3>
+        </motion.h3>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3">

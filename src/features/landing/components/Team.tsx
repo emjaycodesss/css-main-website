@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { HyperText } from '../../../shared/components/ui/hyper-text';
 
@@ -123,6 +123,8 @@ const Team: React.FC = () => {
   /** True when the team section is visible in the viewport; auto-advance runs only then */
   const [isInViewport, setIsInViewport] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(headingRef, { once: true, margin: '0px 0px -60px 0px' });
   const isMobile = useIsMobile();
 
   const nextOfficer = useCallback(() => {
@@ -206,8 +208,13 @@ const Team: React.FC = () => {
           color: #a89cc8 !important;
         }
       `}</style>
-      <div className="w-full max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 2xl:px-12 relative z-10">
-        <div className="inline-flex items-center mb-2 md:mb-4 w-full justify-center">
+      <div className="w-full max-w-[1440px] 2xl:max-w-[1680px] mx-auto px-4 md:px-8 2xl:px-12 relative z-10" ref={headingRef}>
+        <motion.div
+          className="inline-flex items-center mb-2 md:mb-4 w-full justify-center"
+          initial={{ opacity: 0, x: -24 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+        >
           <div className="section-label-wrapper relative px-2 py-1 md:px-3 md:py-1.5">
             <span className="absolute top-0 left-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-l border-[#8b7ee6]" />
             <span className="absolute top-0 right-0 w-1.5 h-1.5 md:w-3 md:h-2 border-t border-r border-[#8b7ee6]" />
@@ -217,12 +224,17 @@ const Team: React.FC = () => {
               <HyperText as="span" startOnView>TEAM</HyperText>
             </h2>
           </div>
-        </div>
+        </motion.div>
 
         {/* THE MODERATOR — headline then single moderator card; same style/size as center officer card */}
-        <h3 className="section-headline uppercase text-white mb-2 md:mb-4 cursor-default text-center">
+        <motion.h3
+          className="section-headline uppercase text-white mb-2 md:mb-4 cursor-default text-center"
+          initial={{ opacity: 0, y: 32 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
+        >
           The Moderator
-        </h3>
+        </motion.h3>
         <div className="flex justify-center mb-20 md:mb-32">
           <div
             className={`${isMobile ? 'w-[90vw] max-w-[90vw]' : 'max-w-[550px] w-full'} mx-auto cursor-default`}
@@ -254,9 +266,14 @@ const Team: React.FC = () => {
         </div>
 
         {/* THE OFFICERS — headline then carousel; comfortable gap between heading and carousel */}
-        <h3 className="section-headline uppercase text-white mb-8 pb-0 md:mb-0 md:pb-0 cursor-default text-center">
+        <motion.h3
+          className="section-headline uppercase text-white mb-8 pb-0 md:mb-0 md:pb-0 cursor-default text-center"
+          initial={{ opacity: 0, y: 28 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+        >
           The Officers
-        </h3>
+        </motion.h3>
         <div className="relative pt-0 pb-0 overflow-visible md:-mt-6">
           <div
             className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 md:h-40 z-[5]"
