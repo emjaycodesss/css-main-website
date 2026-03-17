@@ -1,7 +1,7 @@
 {
   // Cloudflare Workers: static assets only (no Worker script).
   // CI must run: npm run deploy   OR   npx wrangler deploy --config wrangler.jsonc
-  "name": "main-website",
+  "name": "css-main-website",
   "compatibility_date": "2026-02-18",
   "assets": {
     "directory": "./dist",
